@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color preview</title>
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container{
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            width: 100vh;
+            background-color: rgb(223, 223, 223);
+            padding: 45px 30px;
+            color: rgb(165, 149, 149);
+            justify-content: space-around;
+        }
+        .preview{
+            width: 45%;
+            background-color: white;
+            height: 45%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="input">
+            <span>Enter Hex Color code:</span><input class="hex" type="text"><br>
+            <span id="submit" >submit</span>
+        </div>
+        <div class="preview"></div>
+    </div>
+</body>
+<script>
+    const bgc = document.getElementsByClassName('preview')
+    const input = document.getElementsByClassName('hex').value
+    const submit = document.getElementById('submit')
+
+    submit.addEventListener('click',function(e){
+            console.log(input);
+            
+        })
+   
+</script>
+</html>
