@@ -3,50 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color preview</title>
+    <title>Color Preview</title>
     <style>
-        body{
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-        }
-        .container{
-            height: 70vh;
-            display: flex;
-            align-items: center;
-            width: 100vh;
-            background-color: rgb(223, 223, 223);
-            padding: 45px 30px;
-            color: rgb(165, 149, 149);
-            justify-content: space-around;
-        }
-        .preview{
-            width: 45%;
-            background-color: white;
-            height: 45%;
+            min-height: 100vh;
+            background-color: #f5f5f5;
         }
 
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        .preview {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            background-color: white;
+            border: 2px solid #e0e0e0;
+            transition: background-color 0.3s ease;
+        }
+
+        .color-info {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .input-section {
+                width: 40%;
+            }
+
+            .preview-section {
+                width: 60%;
+            }
+
+            .preview {
+                height: 300px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="input">
-            <span>Enter Hex Color code:</span><input class="hex" type="text"><br>
-            <span id="submit" >submit</span>
+        <div class="input-section">
+            <div class="input-group">
+                <label for="hexInput">Enter Hex Color Code:</label>
+                <input id="hexInput" class="hex" type="text" placeholder="#4a90e2" maxlength="7">
+            </div>
+            <button>Preview Color</button>
         </div>
-        <div class="preview"></div>
+        <div class="preview-section">
+            <div class="preview"></div>
+            <p class="color-info">Current color: <span class="color-value">#FFFFFF</span></p>
+        </div>
     </div>
-</body>
-<script>
-    const bgc = document.getElementsByClassName('preview')
-    const input = document.getElementsByClassName('hex').value
-    const submit = document.getElementById('submit')
 
-    submit.addEventListener('click',function(e){
-            console.log(input);
+    <script>
+        const preview = document.querySelector('.preview');
+        const input = document.querySelector('.hex');
+        const submit = document.querySelector('button');
+        const colorValue = document.querySelector('.color-value');
+
+        // Update color on button click
+        submit.addEventListener('click', updateColor);
+        
+        // Update color when Enter key is pressed
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                updateColor();
+            }
+        });
+
+        function updateColor() {
+            let color = input.value.trim();
             
-        })
-   
-</script>
+            // Add # if missing
+            if (color.charAt(0) !== '#') {
+                color = '#' + color;
+            }
+
+            // Validate hex color code
+            if (/^#([0-9A-F]{3}){1,2}$/i.test(color)) {
+                preview.style.backgroundColor = color;
+                colorValue.textContent = color.toUpperCase();
+            } else {
+                alert('Please enter a valid hex color code (e.g., #4a90e2)');
+            }
+        }
+
+        // Set initial color
+        preview.style.backgroundColor = '#FFFFFF';
+    </script>
+</body>
 </html>
